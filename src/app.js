@@ -53,13 +53,20 @@ app.post('/webhook', jsonParser, (req, res) => {
 });
 
 const getResponse = context => {
+
+	let
+		userCompany,
+		answer
+	;
+
 	switch (context.name) {
+
 		/* ##############################
 					    D 1
 	    ############################## */
 		case 'd1':
-			let userCompany = context.parameters.company;
-			var answer = fuzzydata.getAnswer(userCompany);
+			userCompany = context.parameters.company;
+			answer = fuzzydata.getAnswer(userCompany);
 
 			if (answer.distance > 0.4) {
 				if (answer.value === userCompany) {
@@ -120,8 +127,8 @@ const getResponse = context => {
 					    D 2
 	    ############################## */
 		case 'd2':
-			let userCompany = context.parameters.company;
-			var answer = fuzzydata.getAnswer(userCompany);
+			userCompany = context.parameters.company;
+			answer = fuzzydata.getAnswer(userCompany);
 
 			if (answer.distance > 0.4) {
 				if (answer.value === userCompany) {
@@ -178,8 +185,8 @@ const getResponse = context => {
 					    D 3
 	    ############################## */
 		case 'd3':
-			let userCompany = context.parameters.company;
-			var answer = fuzzydata.getAnswer(userCompany);
+			userCompany = context.parameters.company;
+			answer = fuzzydata.getAnswer(userCompany);
 
 			if (answer.distance > 0.4) {
 				if (answer.value === userCompany) {
@@ -246,8 +253,9 @@ const getResponse = context => {
 					    D 4
 	    ############################## */
 		case 'd4':
-			let userCompany1 = context.parameters.company1,
-			    userCompany2 = context.parameters.company2,
+			let
+				userCompany1 = context.parameters.company1,
+				userCompany2 = context.parameters.company2,
                 answer1 = fuzzydata.getAnswer(userCompany1),
                 answer2 = fuzzydata.getAnswer(userCompany2)
             ;
@@ -285,7 +293,354 @@ const getResponse = context => {
 				};
             }
             
+		/* ##############################
+					    D 5
+	    ############################## */
+		case 'd5':
+			userCompany = context.parameters.company;
+				answer = fuzzydata.getAnswer(userCompany);
 
+			if (answer.distance > 0.4) {
+				if (answer.value === userCompany) {
+					return {
+						messages: [
+							{
+								attachment: {
+									payload: {
+										template_type: 'button',
+										text: `Die Website von Aussteller ${answer.value} lautet xxx.xyz.de; Möchten Sie die Website jetzt besuchen?`,
+										buttons: [
+											{
+												url: `https://www.marktplatz.heim-handwerk.de/de/suche?term=${answer.value}`,
+												type: 'web_url',
+												title: 'Ja'
+											}
+										]
+									},
+									type: 'template'
+								}
+							}
+						]
+					};
+				} else {
+					return {
+						messages: [
+							{ text: `Do you mean ${answer.value}?` },
+							{
+								attachment: {
+									payload: {
+										template_type: 'button',
+										text: `Die Website von Aussteller ${answer.value} lautet xxx.xyz.de; Möchten Sie die Website jetzt besuchen?`,
+										buttons: [
+											{
+												url: `https://www.marktplatz.heim-handwerk.de/de/suche?term=${answer.value}`,
+												type: 'web_url',
+												title: 'Ja'
+											}
+										]
+									},
+									type: 'template'
+								}
+							}
+						]
+					};
+				}
+			} else {
+				return {
+					messages: [{ text: `Nein, Ich habe den Aussteller ${userCompany} nicht gefunden.` }]
+				};
+			}
+
+		/* ##############################
+					    D 6
+	    ############################## */
+		case 'd6':
+			userCompany = context.parameters.company;
+				answer = fuzzydata.getAnswer(userCompany);
+
+			if (answer.distance > 0.4) {
+				if (answer.value === userCompany) {
+					return {
+						messages: [
+							{
+								attachment: {
+									payload: {
+										template_type: 'button',
+										text: `Die Geschäftsadresse von ${answer.value} ist die folgende [Adresse]. Weitere Informationen finden Sie hier`,
+										buttons: [
+											{
+												url: `https://www.marktplatz.heim-handwerk.de/de/suche?term=${answer.value}`,
+												type: 'web_url',
+												title: 'Ausstellerprofil'
+											}
+										]
+									},
+									type: 'template'
+								}
+							}
+						]
+					};
+				} else {
+					return {
+						messages: [
+							{ text: `Do you mean ${answer.value}?` },
+							{
+								attachment: {
+									payload: {
+										template_type: 'button',
+										text: `Die Geschäftsadresse von ${answer.value} ist die folgende [Adresse]. Weitere Informationen finden Sie hier`,
+										buttons: [
+											{
+												url: `https://www.marktplatz.heim-handwerk.de/de/suche?term=${answer.value}`,
+												type: 'web_url',
+												title: 'Ausstellerprofil'
+											}
+										]
+									},
+									type: 'template'
+								}
+							}
+						]
+					};
+				}
+			} else {
+				return {
+					messages: [{ text: `Nein, Ich habe den Aussteller ${userCompany} nicht gefunden.` }]
+				};
+			}
+
+		/* ##############################
+					    D 7
+	    ############################## */
+		case 'd7':
+			userCompany = context.parameters.company;
+				answer = fuzzydata.getAnswer(userCompany);
+
+			if (answer.distance > 0.4) {
+				if (answer.value === userCompany) {
+					return {
+						messages: [
+							{
+								attachment: {
+									payload: {
+										template_type: 'button',
+										text: `Hier ist das Firmenprofil von ${answer.value} ..... Hier können Sie weiterlesen`,
+										buttons: [
+											{
+												url: `https://www.marktplatz.heim-handwerk.de/de/suche?term=${answer.value}`,
+												type: 'web_url',
+												title: 'Firmenprofil'
+											}
+										]
+									},
+									type: 'template'
+								}
+							}
+						]
+					};
+				} else {
+					return {
+						messages: [
+							{ text: `Do you mean ${answer.value}?` },
+							{
+								attachment: {
+									payload: {
+										template_type: 'button',
+										text: `Hier ist das Firmenprofil von ${answer.value} ..... Hier können Sie weiterlesen`,
+										buttons: [
+											{
+												url: `https://www.marktplatz.heim-handwerk.de/de/suche?term=${answer.value}`,
+												type: 'web_url',
+												title: 'Firmenprofil'
+											}
+										]
+									},
+									type: 'template'
+								}
+							}
+						]
+					};
+				}
+			} else {
+				return {
+					messages: [{ text: `Nein, Ich habe den Aussteller ${userCompany} nicht gefunden.` }]
+				};
+			}
+
+		/* ##############################
+					    D 8
+	    ############################## */
+		case 'd8':
+			userCompany = context.parameters.company;
+				answer = fuzzydata.getAnswer(userCompany);
+
+			if (answer.distance > 0.4) {
+				if (answer.value === userCompany) {
+					return {
+						messages: [
+							{
+								attachment: {
+									payload: {
+										template_type: 'button',
+										text: `Hier ist die Kontaktdaten von ${answer.value}.`,
+										buttons: [
+											{
+												url: `https://www.marktplatz.heim-handwerk.de/de/suche?term=${answer.value}`,
+												type: 'web_url',
+												title: 'Ausstellerprofil'
+											}
+										]
+									},
+									type: 'template'
+								}
+							}
+						]
+					};
+				} else {
+					return {
+						messages: [
+							{ text: `Do you mean ${answer.value}?` },
+							{
+								attachment: {
+									payload: {
+										template_type: 'button',
+										text: `Hier ist die Kontaktdaten von ${answer.value}.`,
+										buttons: [
+											{
+												url: `https://www.marktplatz.heim-handwerk.de/de/suche?term=${answer.value}`,
+												type: 'web_url',
+												title: 'Ausstellerprofil'
+											}
+										]
+									},
+									type: 'template'
+								}
+							}
+						]
+					};
+				}
+			} else {
+				return {
+					messages: [{ text: `Nein, Ich habe den Aussteller ${userCompany} nicht gefunden.` }]
+				};
+			}
+
+		/* ##############################
+					    D 9
+	    ############################## */
+		case 'd9':
+			userCompany = context.parameters.company;
+				answer = fuzzydata.getAnswer(userCompany);
+
+			if (answer.distance > 0.4) {
+				if (answer.value === userCompany) {
+					return {
+						messages: [
+							{
+								attachment: {
+									payload: {
+										template_type: 'button',
+										text: `Die Telefonnummer von ${answer.value} lautet 01234 / 56789. Per Klick auf dem Button können Sie ihn direkt anrufen.`,
+										buttons: [
+											{
+												type: 'phone_number',
+												payload: '+0123456789',
+												title: 'Anrufen'
+											}
+										]
+									},
+									type: 'template'
+								}
+							}
+						]
+					};
+				} else {
+					return {
+						messages: [
+							{ text: `Do you mean ${answer.value}?` },
+							{
+								attachment: {
+									payload: {
+										template_type: 'button',
+										text: `Die Telefonnummer von ${answer.value} lautet 01234 / 56789. Per Klick auf dem Button können Sie ihn direkt anrufen.`,
+										buttons: [
+											{
+												type: 'phone_number',
+												payload: '+0123456789',
+												title: 'Anrufen'
+											}
+										]
+									},
+									type: 'template'
+								}
+							}
+						]
+					};
+				}
+			} else {
+				return {
+					messages: [{ text: `Nein, Ich habe den Aussteller ${userCompany} nicht gefunden.` }]
+				};
+			}
+			
+		/* ##############################
+					    D 10
+	    ############################## */
+		case 'd10':
+			userCompany = context.parameters.company;
+				answer = fuzzydata.getAnswer(userCompany);
+
+			if (answer.distance > 0.4) {
+				if (answer.value === userCompany) {
+					return {
+						messages: [
+							{
+								attachment: {
+									payload: {
+										template_type: 'button',
+										text: `Der Aussteller ${answer.value} hat die folgenden Themenschwerpunkte - Kategorie 1, Kategorie 2, Kategorie 3. Mehr zu diesem Aussteller erfahren? Alle Informationen finden Sie in seinem [Ausstellerprofil]`,
+										buttons: [
+											{
+												url: `https://www.marktplatz.heim-handwerk.de/de/suche?term=${answer.value}`,
+												type: 'web_url',
+												title: 'Ausstellerprofil'
+											}
+										]
+									},
+									type: 'template'
+								}
+							}
+						]
+					};
+				} else {
+					return {
+						messages: [
+							{ text: `Do you mean ${answer.value}?` },
+							{
+								attachment: {
+									payload: {
+										template_type: 'button',
+										text: `Der Aussteller ${answer.value} hat die folgenden Themenschwerpunkte - Kategorie 1, Kategorie 2, Kategorie 3. Mehr zu diesem Aussteller erfahren? Alle Informationen finden Sie in seinem [Ausstellerprofil]`,
+										buttons: [
+											{
+												url: `https://www.marktplatz.heim-handwerk.de/de/suche?term=${answer.value}`,
+												type: 'web_url',
+												title: 'Ausstellerprofil'
+											}
+										]
+									},
+									type: 'template'
+								}
+							}
+						]
+					};
+				}
+			} else {
+				return {
+					messages: [{ text: `Nein, Ich habe den Aussteller ${userCompany} nicht gefunden.` }]
+				};
+			}
+		
 		/* ##############################
 					NO CONTEXT
 	    ############################## */
