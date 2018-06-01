@@ -34,13 +34,19 @@ app.post('/webhook', urlencodedParser, (req, res) => {
 				// directly send DialoFlow's response back+
 				let payload;
 
+				
 				// in case of existing 'redirect_ot_blocks'
-				if (typeof ['redirect_ot_blocks'] !== 'undefined') {
+				if (typeof response.result.fulfillment.messages[0].payload !== 'undefined') {
+					
+
 					// send redirect_block back
 					payload = response.result.fulfillment.messages[0].payload;
 				}
 				else {
 					// if no 'redirect_ot_blocks' existing, send text back
+
+					console.log('case pure text');
+
 					payload = {
 						messages: [
 							{
