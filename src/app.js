@@ -20,7 +20,7 @@ const util = require('util'),
 */
 app.post('/webhook', urlencodedParser, (req, res) => {
 
-	const userInput = req.body.text;
+	const userInput = req.body;
 	console.log(util.inspect(userInput, {showHidden: false, depth: null}));
 
 	if (typeof userInput !== 'undefined') {
