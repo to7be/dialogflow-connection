@@ -2,7 +2,8 @@ const util = require('util'),
 	express = require('express'),
 	app = express(),
 	bodyParser = require('body-parser'),
-	jsonParser = bodyParser.json(),
+	//jsonParser = bodyParser.json(),
+	urlencodedParser = BodyParser.urlencoded({ extended: false }),
 	uuidv4 = require('uuid/v4'),
 	{ API_AI_KEY_EXPO } = process.env,
 	apiai = require('apiai'),
@@ -17,8 +18,10 @@ const util = require('util'),
 	}
 	
 */
-app.post('/webhook', jsonParser, (req, res) => {
+app.post('/webhook', urlencodedParser, (req, res) => {
+
 	const userInput = req.body.text;
+	console.log(util.inspect(userInput, {showHidden: false, depth: null}));
 
 	if (typeof userInput !== 'undefined') {
 		// API AI Options
