@@ -14,7 +14,8 @@ const util = require('util'),
 
     Input: {
         text: ""
-    }
+	}
+	
 */
 app.post('/webhook', jsonParser, (req, res) => {
 	const userInput = req.body.text;
