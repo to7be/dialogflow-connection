@@ -11,17 +11,12 @@ const util = require('util'),
 	FuzzyMatching = require('fuzzy-matching'),
 	fuzzydata = require('./utils/database');
 /*
-    Webhhook
-
-    Input: {
-        text: ""
-	}
-	
+    Webhook
 */
 app.post('/webhook', urlencodedParser, (req, res) => {
 
-	const userInput = req.body;
-	console.log(util.inspect(userInput, {showHidden: false, depth: null}));
+	const userInput = req.body.queryString;
+	//console.log(util.inspect(userInput, {showHidden: false, depth: null}));
 
 	if (typeof userInput !== 'undefined') {
 		// API AI Options
