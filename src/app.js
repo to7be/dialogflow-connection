@@ -28,19 +28,32 @@ app.post('/webhook', urlencodedParser, (req, res) => {
 		let apiaiRequest = apiaiInterface.textRequest(userInput, options);
 
 		apiaiRequest.on('response', response => {
+
 			// catch missing context
 			if (response.result.contexts.length == 0) {
 				// directly send DialoFlow's response back+
-				let payload = {
-					messages: [
-						{
-							text: response.result.fulfillment.speech
-						}
-					]
-				};
+				let payload;
 
+				// in case of existing 'redirect_ot_blocks'
+				if (typeof ['redirect_ot_blocks'] !== 'undefined') {
+					// send redirect_block back
+					payload = response.result.fulfillment.messages[0].payload;
+				}
+				else {
+					// if no 'redirect_ot_blocks' existing, send text back
+					payload = {
+						messages: [
+							{
+								text: response.result.fulfillment.speech
+							}
+						]
+					};
+				}
+			
 				res.status(200).send(payload);
+				
 			} else {
+				// In case of existing context
 				let context = response.result.contexts[0];
 				let answer = getResponse(context);
 				res.status(200).send(answer);
