@@ -32,8 +32,17 @@ app.post('/webhook', urlencodedParser, (req, res) => {
 
             // catch missing context
 			if (response.result.contexts.length == 0) {
-                // directly send DialoFlow's response back
-				res.status(200).send(response.result.fulfillment.speech);
+				// directly send DialoFlow's response back+
+				let payload = {
+					"messages": [
+						{
+							"text": response.result.fulfillment.speech
+						}
+					]
+				};
+
+				res.status(200).send(payload);
+
 			} else {
 				let context = response.result.contexts[0];
 				let answer = getResponse(context);
@@ -47,7 +56,7 @@ app.post('/webhook', urlencodedParser, (req, res) => {
 
 		apiaiRequest.end();
 	} else {
-		res.status(500).send('Parameter text is missing in request body.');
+		res.status(500).send('Parameter queryString is missing in request body.');
 	}
 });
 
